@@ -1,6 +1,8 @@
 # Tienda API
 
-REST API para gestión de ventas de una tienda online, desarrollada como reto técnico profesional en 5 días.
+## Descripción
+
+*REST API para gestión de ventas de una tienda online, desarrollada como reto técnico profesional en 5 días.*
 
 ## Stack
 
@@ -8,10 +10,10 @@ REST API para gestión de ventas de una tienda online, desarrollada como reto t�
 ![Spring Boot](https://img.shields.io/badge/Spring_Boot_3-6DB33F?style=flat&logo=spring&logoColor=white)
 ![MySQL](https://img.shields.io/badge/MySQL_8-4479A1?style=flat&logo=mysql&logoColor=white)
 ![Docker](https://img.shields.io/badge/Docker-2496ED?style=flat&logo=docker&logoColor=white)
+![Flyway](https://img.shields.io/badge/Flyway-62B347?style=flat&logo=flyway&logoColor=white)
+![Swagger](https://img.shields.io/badge/OpenAPI-85EA2D?style=flat&logo=swagger&logoColor=black)
 
-`Spring Boot 3` · `Spring Data JPA` · `MapStruct` · `Flyway` · `JaCoCo` · `SpringDoc OpenAPI`
-
----
+`Spring Data JPA` · `MapStruct` · `JaCoCo`
 
 ## Arquitectura
 
@@ -25,8 +27,6 @@ Controller -> Service -> Repository -> Domain
 - **MapStruct** para mapeos en tiempo de compilación
 - **GlobalExceptionHandler** con contrato de error uniforme
 - **Soft delete** en productos para preservar integridad del historial de pedidos
-
----
 
 ## Estructura de paquetes
 
@@ -47,8 +47,6 @@ src/main/java/com/delogica/tienda_api/
 └── security/config/   # OpenAPI
 ```
 
----
-
 ## Módulos
 
 | Módulo | Endpoints |
@@ -57,8 +55,6 @@ src/main/java/com/delogica/tienda_api/
 | Clientes | CRUD + gestión de direcciones + paginación y filtrado por email |
 | Pedidos | Creación con validación de stock · Cambio de estado · Paginación y filtrado |
 
----
-
 ## Decisiones técnicas destacadas
 
 - **Soft delete en productos** — los productos no se eliminan físicamente para preservar el historial de pedidos. `active = false` los excluye de consultas y nuevos pedidos.
@@ -66,23 +62,20 @@ src/main/java/com/delogica/tienda_api/
 - **Máquina de estados** — las transiciones de pedido están validadas: `CREATED → PAID → SHIPPED`, `CREATED/PAID → CANCELLED`. La cancelación restaura el stock automáticamente.
 - **Dirección de envío validada** — al crear un pedido se verifica que la dirección de envío pertenece al cliente que realiza el pedido.
 
----
+## Instrucciones
 
-## Arranque con Docker
+### Docker
 
 ```bash
 docker compose up --build
 ```
 
-La API quedará disponible en `http://localhost:8080`
+La API quedará disponible en `http://localhost:8080`.
 
----
-
-## Arranque local
+### Local
 
 ```bash
 # Requisitos: Java 17, MySQL 8
-
 mvn spring-boot:run
 ```
 
@@ -94,27 +87,27 @@ SPRING_DATASOURCE_USERNAME
 SPRING_DATASOURCE_PASSWORD
 ```
 
----
-
-## Documentación
-
-Swagger UI disponible en:
+### Documentación interactiva (Swagger)
 
 ```
 http://localhost:8080/swagger-ui.html
 ```
 
----
-
-## Tests
+### Tests
 
 ```bash
 mvn verify
 ```
 
-Reporte disponible en `target/site/jacoco/index.html`.
+Reporte de cobertura en `target/site/jacoco/index.html`.
 
----
+## Recursos
+
+- [Diagrama ERD](docs/img/ERD-TiendaOnline.jpg)
+- Decisiones técnicas detalladas: [Customer](docs/decisions/customer-decisions.md) · [Order](docs/decisions/order-decisions.md) · [Product](docs/decisions/product-decisions.md)
+- [Esquema de base de datos](docs/database-schema.txt)
+- [Plan de tests unitarios](docs/test-cases.txt) · [Reporte de cobertura](docs/test-coverage.txt)
+- Colección Postman: `docs/Tienda Online API.postman_collection.json` (+ entorno local incluido)
 
 ## Mejoras futuras
 
